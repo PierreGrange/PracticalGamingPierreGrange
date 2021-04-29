@@ -1,0 +1,15 @@
+-3D environment with different levels
+-Goal is to kill a given target (harmless target)
+-Guards on the map who will shoot at the player if he gets in their field of view
+-Player has to stab the target at close range
+
+Guards :
+-Ranged weapons
+-Cone field of view
+-Area in which they patroll
+-The higher the level, the strongest their bullets hit you (at some point you get killed in one shot)
+
+Target :
+-Wanders around the area
+-Harmless
+-Will run away from you if you're in it's field of view
