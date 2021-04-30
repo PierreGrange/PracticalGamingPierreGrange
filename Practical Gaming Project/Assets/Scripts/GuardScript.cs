@@ -22,6 +22,7 @@ public class GuardScript : MonoBehaviour
     private float nextTurnTime;
     private Vector3 startingPosition;
     private int positioned = 0;
+    private float guardsY;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +39,7 @@ public class GuardScript : MonoBehaviour
         nextTurnTime = 0;
         turningSpeed = 90;
         turningDirection = 1;
+        guardsY = 0f;
     }
 
     // Update is called once per frame
@@ -94,7 +96,7 @@ public class GuardScript : MonoBehaviour
 
     internal void Patrolling(Vector3 destination)
     {
-        agent.SetDestination(new Vector3(destination.x, 0, destination.z));
+        agent.SetDestination(new Vector3(destination.x, guardsY, destination.z));
     }
 
     internal void Patrolling()
@@ -107,7 +109,7 @@ public class GuardScript : MonoBehaviour
             else
             {
                 nextPoint.SetActive(false);
-                agent.SetDestination(new Vector3(nextPoint.transform.position.x, 0, nextPoint.transform.position.z));
+                agent.SetDestination(new Vector3(nextPoint.transform.position.x, guardsY, nextPoint.transform.position.z));
                 isCurrently = guardState.patrolling;
             }
         }
@@ -120,7 +122,7 @@ public class GuardScript : MonoBehaviour
 
     internal void SetPosition(Vector3 position)
     {
-        startingPosition = new Vector3(position.x, 0f, position.z);
+        startingPosition = new Vector3(position.x, guardsY, position.z);
         //transform.position = new Vector3(position.x, 0f, position.z);
     }
 }
