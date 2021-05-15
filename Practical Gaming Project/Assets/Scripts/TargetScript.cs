@@ -16,6 +16,7 @@ public class TargetScript : MonoBehaviour
     float fieldOfView;
     private float idleTime;
     private float totalIdleTime;
+    Animator targetAnimator;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,10 @@ public class TargetScript : MonoBehaviour
         walkPoints = GameObject.FindGameObjectsWithTag("Walk Point");
         nextPoint = walkPoints[0];
         idleTime = 3;
+        targetAnimator = GetComponent<Animator>();
+        targetAnimator.SetBool("isIdling", true);
+        targetAnimator.SetBool("isWalking", false);
+        targetAnimator.SetBool("isDying", false);
     }
 
     // Update is called once per frame
@@ -55,6 +60,9 @@ public class TargetScript : MonoBehaviour
     private void SwitchToIdle()
     {
         isCurrently = targetState.idle;
+        targetAnimator.SetBool("isIdling", true);
+        targetAnimator.SetBool("isWalking", false);
+        targetAnimator.SetBool("isDying", false);
 
         totalIdleTime = 0f;
     }
@@ -71,6 +79,9 @@ public class TargetScript : MonoBehaviour
                 nextPoint.SetActive(false);
                 agent.SetDestination(new Vector3(nextPoint.transform.position.x, 0, nextPoint.transform.position.z));
                 isCurrently = targetState.walking;
+                targetAnimator.SetBool("isIdling", false);
+                targetAnimator.SetBool("isWalking", true);
+                targetAnimator.SetBool("isDying", false);
             }
         }
     }
@@ -82,6 +93,14 @@ public class TargetScript : MonoBehaviour
 
     internal void SetPosition(Vector3 position)
     {
-        transform.position = new Vector3(position.x, 0f, position.z);
+        transform.position = new Vector3(position.x, 0.1f, position.z);
+    }
+
+    public void KillTarget()
+    {
+        targetAnimator.SetBool("isIdling", false);
+        targetAnimator.SetBool("isWalking", false);
+        targetAnimator.SetBool("isDying", true);
+        Destroy(this.gameObject);
     }
 }
